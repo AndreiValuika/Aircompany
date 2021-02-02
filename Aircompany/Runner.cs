@@ -34,7 +34,8 @@ namespace Aircompany
             Console.WriteLine(passengerAirport
                               .SortByMaxSpeed()
                               .ToString());
-            Console.WriteLine(passengerAirport.GetPassengerPlaneWithMaxPassengersCapacity());           
+            Console.WriteLine(passengerAirport.GetPassengerPlaneWithMaxPassengersCapacity());
+            Console.ReadKey();
         }
     }
 }

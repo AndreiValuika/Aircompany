@@ -17,28 +17,12 @@ namespace Aircompany
 
         public List<PassengerPlane> GetPassengersPlanes()
         {
-            List<PassengerPlane> passengerPlanes = new List<PassengerPlane>();
-            for (int i=0; i < _planes.Count; i++)
-            {
-                if (_planes[i].GetType() == typeof(PassengerPlane))
-                {
-                    passengerPlanes.Add((PassengerPlane)_planes[i]);
-                }
-            }
-            return passengerPlanes;
+            return _planes.Where(x => x.GetType() == typeof(PassengerPlane)).Select(x => (PassengerPlane)x).ToList();
         }
 
         public List<MilitaryPlane> GetMilitaryPlanes()
         {
-            List<MilitaryPlane> militaryPlanes = new List<MilitaryPlane>();
-            for (int i = 0; i < _planes.Count; i++)
-            {
-                if (_planes[i].GetType() == typeof(MilitaryPlane))
-                {
-                    militaryPlanes.Add((MilitaryPlane)_planes[i]);
-                }
-            }
-            return militaryPlanes;
+            return _planes.Where(x => x.GetType() == typeof(MilitaryPlane)).Select(x => (MilitaryPlane)x).ToList();
         }
 
         public PassengerPlane GetPassengerPlaneWithMaxPassengersCapacity()
@@ -49,18 +33,7 @@ namespace Aircompany
 
         public List<MilitaryPlane> GetTransportMilitaryPlanes()
         {
-            List<MilitaryPlane> transportMilitaryPlanes = new List<MilitaryPlane>();
-            List<MilitaryPlane> militaryPlanes = GetMilitaryPlanes();
-            for (int i = 0; i < militaryPlanes.Count; i++)
-            {
-                MilitaryPlane plane = militaryPlanes[i];
-                if (plane.PlaneTypeIs() == MilitaryType.TRANSPORT)
-                {
-                    transportMilitaryPlanes.Add(plane);
-                }
-            }
-
-            return transportMilitaryPlanes;
+            return GetMilitaryPlanes().Where(x => x.PlaneTypeIs() == MilitaryType.TRANSPORT).ToList();
         }
 
         public Airport SortByMaxDistance()

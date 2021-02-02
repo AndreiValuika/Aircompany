@@ -11,7 +11,7 @@ namespace Aircompany.Planes
         {
             _passengersCapacity = passengersCapacity;
         }
-        public int PassengersCapacityIs()
+        public int GetPassengersCapacity()
         {
             return _passengersCapacity;
         }

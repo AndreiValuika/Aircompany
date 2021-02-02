@@ -28,7 +28,7 @@ namespace Aircompany
         public PassengerPlane GetPassengerPlaneWithMaxPassengersCapacity()
         {
             List<PassengerPlane> passengerPlanes = GetPassengersPlanes();
-            return passengerPlanes.Aggregate((w, x) => w.PassengersCapacityIs() > x.PassengersCapacityIs() ? w : x);             
+            return passengerPlanes.Aggregate((w, x) => w.GetPassengersCapacity() > x.GetPassengersCapacity() ? w : x);
         }
 
         public List<MilitaryPlane> GetTransportMilitaryPlanes()
@@ -38,17 +38,17 @@ namespace Aircompany
 
         public Airport SortByMaxDistance()
         {
-            return new Airport(_planes.OrderBy(w => w.MAXFlightDistance()));
+            return new Airport(_planes.OrderBy(w => w.GetMaxFlightDistance()));
         }
 
         public Airport SortByMaxSpeed()
         {
-            return new Airport(_planes.OrderBy(w => w.GetMS()));
+            return new Airport(_planes.OrderBy(w => w.GetMaxSpeed()));
         }
 
         public Airport SortByMaxLoadCapacity()
         {
-            return new Airport(_planes.OrderBy(w => w.MAXLoadCapacity()));
+            return new Airport(_planes.OrderBy(w => w.GetMaxLoadCapacity()));
         }
 
 

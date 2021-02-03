@@ -24,53 +24,58 @@ namespace AircompanyTests.Tests
            new MilitaryPlane("B-52 Stratofortress", 1000, 20000, 80000, MilitaryType.BOMBER),
            new MilitaryPlane("F-15", 1500, 12000, 10000, MilitaryType.FIGHTER),
            new MilitaryPlane("F-22", 1550, 13000, 11000, MilitaryType.FIGHTER),
-           
-   };
+        };
+        private Airport _airport;
 
-        private PassengerPlane planeWithMaxPassengerCapacity = new PassengerPlane("Boeing-747", 980, 16100, 70500, 242);
+        [SetUp]
+        public void Init()
+        {
+            _airport = new Airport(planes);
+        }
+
 
         [Test]
         public void PositiveGetTransportMilitaryPlanesTest()
         {
             planes.Add(new MilitaryPlane("C-130 Hercules", 650, 5000, 110000, MilitaryType.TRANSPORT));
-
-            Airport airport = new Airport(planes);
-            List<MilitaryPlane> transportMilitaryPlanes = airport.GetTransportMilitaryPlanes().ToList();
+            _airport = new Airport(planes);
+            List<MilitaryPlane> transportMilitaryPlanes = _airport.GetTransportMilitaryPlanes().ToList();
             Assert.IsNotEmpty(transportMilitaryPlanes.Where(x => x.PlaneTypeIs() == MilitaryType.TRANSPORT));
         }
 
         [Test]
         public void NegativeGetTransportMilitaryPlanesTest()
         {
-            Airport airport = new Airport(planes);
-            Assert.IsEmpty(airport.GetTransportMilitaryPlanes());
+            Assert.IsEmpty(_airport.GetTransportMilitaryPlanes());
         }
 
         [Test]
-        public void MyTest2()
+        public void MaxPassengerCapacityTest()
         {
-            Airport airport = new Airport(planes);
-            PassengerPlane expectedPlaneWithMaxPassengersCapacity = airport.GetPassengerPlaneWithMaxPassengersCapacity();           
+            var planeWithMaxPassengerCapacity = new PassengerPlane("Boeing-747", 980, 16100, 70500, 242);
+            Assert.AreEqual(_airport.GetPassengerPlaneWithMaxPassengersCapacity(), planeWithMaxPassengerCapacity);           
         }
 
         [Test]
-        public void MyTest3()
+        public void SortedByMaxLoadCapacityTest()
         {
-            Airport airport = new Airport(planes);
-            airport = airport.SortByMaxLoadCapacity();
-            List<Plane> planesSortedByMaxLoadCapacity = airport.GetPlanes().ToList();
+           List<Plane> sortedPlanes = new List<Plane>(){
+           new MilitaryPlane("F-15", 1500, 12000, 10000, MilitaryType.FIGHTER),
+           new MilitaryPlane("F-22", 1550, 13000, 11000, MilitaryType.FIGHTER),
+           new PassengerPlane("Embraer 190", 870, 8100, 30800, 64),
+           new PassengerPlane("Sukhoi Superjet 100", 870, 11500, 50500, 140),
+           new PassengerPlane("Boeing-737", 900, 12000, 60500, 164),
+           new PassengerPlane("Bombardier CS300", 920, 11000, 60700, 196),
+           new PassengerPlane("Boeing-737-800", 940, 12300, 63870, 192),
+           new PassengerPlane("Airbus A320", 930, 11800, 65500, 188),
+           new MilitaryPlane("B-2 Spirit", 1030, 22000, 70000, MilitaryType.BOMBER),
+           new PassengerPlane("Boeing-747", 980, 16100, 70500, 242),
+           new MilitaryPlane("B-1B Lancer", 1050, 21000, 80000, MilitaryType.BOMBER),
+           new MilitaryPlane("B-52 Stratofortress", 1000, 20000, 80000, MilitaryType.BOMBER),
+           new PassengerPlane("Airbus A330", 990, 14800, 80500, 222),
+           };
 
-            bool nextPlaneMaxLoadCapacityIsHigherThanCurrent = true;
-            for (int i = 0; i < planesSortedByMaxLoadCapacity.Count - 1; i++)
-            {
-                Plane currentPlane = planesSortedByMaxLoadCapacity[i];
-                Plane nextPlane = planesSortedByMaxLoadCapacity[i + 1];
-                if (currentPlane.GetMaxLoadCapacity() > nextPlane.GetMaxLoadCapacity())
-                {
-                    nextPlaneMaxLoadCapacityIsHigherThanCurrent = false;
-                }
-            }
-            Assert.That(nextPlaneMaxLoadCapacityIsHigherThanCurrent==true);
+           Assert.AreEqual(_airport.SortByMaxLoadCapacity().GetPlanes(), sortedPlanes);
         }
     }
 }
